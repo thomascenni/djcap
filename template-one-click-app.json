@@ -1,0 +1,50 @@
+{
+    "captainVersion": "2",
+    "documentation": "Taken from https://github.com/thomascenni/djcap",
+    "displayName": "DjCap",
+    "description": "Deploy a Django application with Caprover PaaS.",
+    "dockerCompose": {
+        "version": "2",
+        "services": {
+            "$$cap_appname": {
+                "image": "alpine:3.8",
+                "containerHttpPort": "80",
+                "volumes": [
+                ],
+                "restart": "always",
+                "environment": {
+                    "ALLOWED_HOSTS": "$$cap_djcap_allowed_hosts",
+                    "MODULE_NAME": "$$cap_djcap_module_name",
+                    "VARIABLE_NAME": "$$cap_djcap_variable_name"
+                }
+            }
+        }
+    },
+    "instructions": {
+        "start": "This is the template for deploying a Django application with Caprover.",
+        "end": "The default settings are valid to deploy the application.\n"
+    },
+    "variables": [
+        {
+            "id": "$$cap_djcap_allowed_hosts",
+            "label": "ALLOWED_HOSTS",
+            "defaultValue": "*",
+            "description": "Leave * for test, but fill with a comma separated list of allowed hosts for production.",
+            "validRegex": ""
+        },
+        {
+            "id": "$$cap_djcap_module_name",
+            "label": "MODULE_NAME",
+            "defaultValue": "djcap.wsgi",
+            "description": "The wsgi application inside the Django project.",
+            "validRegex": ""
+        },
+        {
+            "id": "$$cap_djcap_variable_name",
+            "label": "VARIABLE_NAME",
+            "defaultValue": "application",
+            "description": "This is the wsgi application variable returned in file djcap.wsgi.py",
+            "validRegex": ""
+        }
+    ]
+}
