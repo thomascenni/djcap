@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from django.core.exceptions import ImproperlyConfigured
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,8 +27,12 @@ SECRET_KEY = '!@d632^!%v6*d*((9uc%j6n)+(u3c@-a@g!4+n4p4p-%89ui3f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
+if os.environ.get("ALLOWED_HOSTS"):
+    try:
+        ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(",")
+    except:
+        raise ImproperlyConfigured("ALLOWED_HOSTS could not be parsed.")
 
 # Application definition
 
